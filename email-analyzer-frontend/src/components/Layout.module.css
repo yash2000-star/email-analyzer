@@ -1,0 +1,74 @@
+/* src/components/Layout.module.css */
+.layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  height: 60px;
+  background-color: var(--bg-dark-secondary);
+  border-bottom: 1px solid var(--border-dark);
+  color: var(--text-light-primary);
+  flex-shrink: 0;
+}
+
+.headerLeft { flex: 1; }
+.logo {
+  text-decoration: none;
+  color: var(--text-light-primary);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.headerCenter {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+.searchBar {
+    width: 100%;
+    max-width: 500px;
+    padding: 8px 15px;
+    border-radius: 15px;
+    border: 1px solid var(--border-dark);
+    background-color: var(--bg-dark-tertiary);
+    color: var(--text-light-primary);
+    font-size: 0.9rem;
+    outline: none;
+}
+.searchBar:focus { border-color: var(--accent-blue); }
+.searchBar::placeholder { color: var(--text-light-secondary); }
+
+.headerRight {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.userName {
+    margin-right: 15px;
+    font-size: 0.9rem;
+}
+.logoutButton {
+  background: none;
+  border: none;
+  color: var(--icon-color);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logoutButton:hover { color: var(--text-light-primary); }
+
+.mainContent {
+    flex-grow: 1;
+    display: flex; /* Important: Make main content flex container for dashboard */
+    overflow: hidden; /* Prevent main content from causing body scroll */
+}

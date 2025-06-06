@@ -1,0 +1,104 @@
+/* src/components/dashboard/Sidebar.module.css */
+.sidebar {
+  width: 250px; /* Slightly wider? Adjust as needed */
+  background-color: var(--bg-dark-secondary);
+  height: 100%;
+  /* Add padding top/bottom, remove horizontal */
+  padding: 20px 0;
+  border-right: 1px solid var(--border-dark);
+  overflow-y: auto;
+  color: var(--text-light-secondary);
+  flex-shrink: 0;
+  display: flex; /* Use flex for column layout within sidebar */
+  flex-direction: column;
+}
+
+/* --- Navigation Items (Common Styling) --- */
+.navItem {
+  display: flex;
+  align-items: center;
+  /* Use horizontal padding, remove vertical */
+  padding: 10px 25px; /* Increased horizontal padding */
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500; /* Medium weight for items */
+  color: var(--text-light-secondary); /* Dimmer default text */
+  transition: background-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+  border-left: 3px solid transparent; /* Placeholder for selected indicator */
+  margin-bottom: 2px; /* Small space between items */
+}
+
+.navItem:hover {
+  background-color: var(--bg-dark-tertiary);
+  color: var(--text-light-primary); /* Brighten text on hover */
+}
+
+/* --- Selected Item Styling --- */
+.navItem.selected {
+  background-color: var(--accent-blue-light); /* Use subtle blue bg */
+  color: var(--text-light-primary); /* Bright selected text */
+  font-weight: 600; /* Slightly bolder selected */
+  border-left-color: var(--accent-blue); /* Use accent blue for border indicator */
+}
+.navItem.selected .icon {
+    color: var(--accent-blue); /* Match icon color to border */
+}
+
+/* --- Icons --- */
+.icon {
+  margin-right: 18px; /* More space after icon */
+  font-size: 1rem; /* Consistent icon size */
+  color: var(--icon-color); /* Default icon color */
+  flex-shrink: 0;
+  width: 20px; /* Ensure icons align vertically */
+  text-align: center;
+}
+
+/* --- Divider --- */
+.divider {
+    border: none;
+    border-top: 1px solid var(--border-dark);
+    margin: 20px 0; /* More vertical margin */
+}
+
+/* --- Section Titles --- */
+.sectionTitle {
+    padding: 5px 25px 10px 25px; /* Adjust padding */
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-light-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    display: flex;
+    align-items: center;
+}
+/* Icon within section title */
+.sectionTitle .icon {
+    margin-right: 10px; /* Less space for title icon */
+    font-size: 0.9em; /* Slightly smaller title icon */
+}
+
+
+/* --- Date Items --- */
+.dateItem {
+    font-size: 0.85rem; /* Keep dates slightly smaller */
+    padding-left: 30px; /* Indent dates further */
+    font-weight: 400; /* Normal weight for dates */
+}
+/* Adjust selected date padding to align with border */
+.dateItem.selected {
+     padding-left: 27px;
+}
+
+/* --- Loading / Error / No Dates --- */
+.loading, .error, .noDates {
+    padding: 10px 25px; /* Match item padding */
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--text-light-secondary);
+}
+.error { color: var(--color-red-error); }
+
+/* Optional: Add styling for scrollbar within sidebar if needed */
+/* .sidebar::-webkit-scrollbar { ... } */

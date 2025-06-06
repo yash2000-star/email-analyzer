@@ -1,0 +1,116 @@
+/* src/components/landing/GetStartedBanner.module.css */
+
+.bannerSection {
+    padding: 0;
+    background-color: var(--bg-dark-main);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .imageRow {
+    display: flex;
+    width: 100%;
+    height: 300px; /* Adjust height as needed */
+    opacity: 0.4; /* Can adjust opacity */
+    filter: grayscale(20%); /* Adjust filter */
+    position: relative;
+    z-index: 1;
+  }
+  
+  .backgroundImage {
+    width: 25%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  
+  /* NEW styles for the button container */
+  .buttonContainer {
+    background-color: transparent;/* Match section background */
+    position: absolute;
+    bottom: 0; /* Start positioning from bottom of bannerSection */
+    left: 0;
+    right: 0; /* Make it span full width */
+    padding: 30px 20px; /* Padding below button, less above needed now */
+    z-index: 2; /* Ensure it's above images */
+    display: flex; /* Center the button *within* this full-width container */
+    justify-content: center;
+    background: linear-gradient(to top, var(--bg-dark-main) 50%, transparent 100%);
+  }
+  
+  /* REMOVED .buttonOverlay styles */
+  
+  .bannerButton {
+    display: flex; /* Changed from inline-flex back to flex for simplicity */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 750px; /* Max width */
+    padding: 25px 40px;
+    background-color: var(--accent-green);
+    color: var(--bg-dark-main);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease; /* REMOVED transform from transition */
+    text-decoration: none;
+    box-shadow: 0 6px 25px rgba(112, 255, 112, 0.1); /* Adjusted initial shadow */
+    position: relative; /* Needed if container uses negative margin */
+    z-index: 3;
+  }
+  
+  .bannerButton:hover {
+    background-color: var(--accent-green-darker);
+    /* REMOVED transform: scale(...) */
+    box-shadow: 0 8px 30px rgba(112, 255, 112, 0.2); /* Slightly stronger shadow */
+  }
+  .bannerButton:active {
+      /* REMOVED transform: scale(...) */
+      background-color: var(--accent-green); /* Can revert color slightly on active */
+      box-shadow: 0 6px 25px rgba(112, 255, 112, 0.1); /* Revert shadow */
+  }
+  
+  
+  .buttonText {
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1;
+    margin-right: 25px;
+  }
+  
+  .arrowIcon {
+    font-size: 1.8rem;
+    opacity: 0.9;
+  }
+  
+  /* Responsive adjustments */
+@media (max-width: 768px) {
+    .imageRow { height: 250px; }
+    .backgroundImage:nth-child(4) { display: none; }
+    .backgroundImage { width: 33.33%; }
+
+    .buttonContainer {
+        padding: 25px 20px;
+        /* Adjust negative margin if using Method 1 */
+        /* margin-top: -30px; */
+    }
+    .bannerButton { max-width: 600px; padding: 20px 30px; }
+    .buttonText { font-size: 1.5rem; }
+    .arrowIcon { font-size: 1.5rem; }
+}
+
+@media (max-width: 500px) {
+    .imageRow { height: 200px; }
+    .backgroundImage:nth-child(3) { display: none; }
+    .backgroundImage { width: 50%; }
+
+    .buttonContainer {
+        padding: 20px 15px;
+         /* Adjust negative margin if using Method 1 */
+         /* margin-top: -25px; */
+    }
+    .bannerButton { padding: 18px 25px; }
+    .buttonText { font-size: 1.2rem; }
+    .arrowIcon { font-size: 1.2rem; }
+}

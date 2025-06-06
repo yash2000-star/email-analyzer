@@ -1,0 +1,83 @@
+/* src/components/landing/HeroSection.module.css */
+
+.heroContainer {
+  background-color: var(--bg-dark-main); /* Ensure background color */
+  /* position: relative; */ /* Needed if using absolute positioned pseudo-elements */
+  /* overflow: hidden; */ /* Needed if glows extend beyond bounds */
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh; /* Adjust height */
+  padding: 80px 20px; /* More vertical padding */
+  text-align: center;
+  max-width: 800px; /* Control content width */
+  margin: 0 auto; /* Center content */
+  position: relative; /* For stacking context if needed */
+  z-index: 1; /* Keep content above potential background elements */
+}
+
+/* Optional: Example background glow using pseudo-element */
+.heroContainer::before {
+    content: '';
+    position: absolute;
+    top: -10%; left: -10%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(112, 255, 112, 0.1), transparent 70%);
+    filter: blur(50px);
+    z-index: 0;
+} 
+
+
+.title {
+  font-size: 3rem; /* Adjust size */
+  font-weight: 700; /* Bold */
+  color: var(--text-light-primary);
+  margin-bottom: 15px;
+  line-height: 1.2;
+  max-width: 600px; /* Limit title width slightly */
+}
+
+.highlight { /* Style for specific words */
+  color: var(--accent-green);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-light-secondary);
+  margin-bottom: 40px;
+  line-height: 1.7;
+  max-width: 550px; /* Limit subtitle width */
+}
+
+/* src/components/landing/HeroSection.module.css */
+/* ... Keep other styles (.heroContainer, .hero, .title, .subtitle) ... */
+
+.ctaButton {
+  padding: 14px 35px; /* Adjust padding */
+  font-size: 1.05rem; /* Slightly larger font */
+  font-weight: 600;
+  color: var(--bg-dark-main); /* Dark text on green button */
+  background-color: var(--accent-green); /* USE OUR GREEN */
+  border: none;
+  border-radius: 8px; /* Slightly less rounded than pill */
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  display: inline-flex; /* Align icon if added later */
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space if icon is added */
+}
+
+.ctaButton:hover {
+  background-color: var(--accent-green-darker); /* Use darker green on hover */
+  transform: translateY(-2px); /* Subtle lift */
+  box-shadow: 0 4px 15px rgba(112, 255, 112, 0.15); /* Subtle green glow on hover */
+}
+.ctaButton:active {
+    transform: translateY(0px) scale(0.98); /* Press down effect */
+    box-shadow: none;
+}

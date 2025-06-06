@@ -1,0 +1,72 @@
+/* src/components/landing/FeaturesSection.module.css */
+.features {
+  padding: 80px 20px;
+  background-color: var(--bg-dark-main);
+}
+
+/* Optional Section Title */
+/* .sectionTitle { ... } */
+
+.grid {
+  display: grid;
+  /* Use grid or flexbox for 3 columns */
+   grid-template-columns: repeat(3, 1fr); /* Force 3 columns */
+   /* Or use flexbox: */
+   /* display: flex; */
+   /* justify-content: center; */
+   /* flex-wrap: wrap; */ /* Allow wrapping on smaller screens */
+  gap: 30px; /* Spacing between cards */
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.featureCard {
+  background-color: var(--bg-dark-card);
+  border: 1px solid var(--border-dark-subtle);
+  border-radius: 16px; /* More rounded corners like Motta */
+  padding: 30px;
+  text-align: center; /* Center content in card */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.featureCard:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 10px 20px rgba(112, 255, 112, 0.05); /* Subtle green glow */
+}
+
+
+.iconWrapper {
+    color: var(--accent-green);
+    margin-bottom: 20px;
+    /* Make icon bg circle? */
+    /* background-color: rgba(112, 255, 112, 0.1);
+    display: inline-flex;
+    padding: 15px;
+    border-radius: 50%; */
+}
+
+.featureTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-light-primary);
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.featureDescription {
+  font-size: 0.95rem;
+  color: var(--text-light-secondary);
+  line-height: 1.6;
+}
+
+/* Responsive adjustments for cards */
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: 1fr 1fr; /* 2 columns on medium screens */
+    }
+}
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr; /* 1 column on small screens */
+    }
+}

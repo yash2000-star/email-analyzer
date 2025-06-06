@@ -1,0 +1,110 @@
+/* src/components/landing/Navbar.module.css */
+.navbar {
+    background-color: var(--bg-dark-main); /* Match main background */
+    color: var(--text-light-primary);
+    padding: 0 40px; /* Horizontal padding */
+    height: 70px; /* Navbar height */
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-dark-subtle); /* Subtle separator */
+    width: 100%;
+    box-sizing: border-box; /* Include padding in width calculation */
+    /* Optional: Make it sticky */
+    /* position: sticky;
+    top: 0;
+    z-index: 100; */
+  }
+  
+  .navContent {
+    width: 100%;
+    max-width: 1300px; /* Max width for content alignment */
+    margin: 0 auto; /* Center content */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  /* Left Side */
+  .brandLogo {
+    text-decoration: none;
+    color: var(--text-light-primary);
+    font-weight: 600; /* Bold */
+    font-size: 1.2rem;
+    flex-shrink: 0; /* Prevent logo from shrinking */
+  }
+  
+  /* Center Links */
+  .navLinks {
+    display: flex;
+    gap: 35px; /* Spacing between links */
+    /* Hide on smaller screens if needed */
+  }
+  
+  .navLink {
+    text-decoration: none;
+    color: var(--text-light-secondary); /* Dimmer link color */
+    font-size: 0.95rem;
+    font-weight: 500; /* Medium weight */
+    transition: color 0.2s ease;
+    position: relative; /* For potential underline effect */
+    padding: 5px 0; /* Add padding for hover area */
+  }
+  
+  .navLink:hover {
+    color: var(--text-light-primary); /* Brighten on hover */
+  }
+  
+  /* Optional: Underline effect on hover/active */
+  /* .navLink::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 50%;
+      background-color: var(--accent-green);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+  }
+  .navLink:hover::after {
+      width: 100%;
+  } */
+  
+  /* Right Side */
+  .navActions {
+     flex-shrink: 0; /* Prevent button from shrinking */
+  }
+  
+  .loginButton {
+    padding: 8px 20px; /* Adjust padding */
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--bg-dark-main);
+    background-color: var(--accent-green); /* Use green accent */
+    border: none;
+    border-radius: 6px; /* Match other buttons */
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+  }
+  
+  .loginButton:hover {
+    background-color: var(--accent-green-darker);
+    transform: scale(1.03); /* Optional scale */
+  }
+  .loginButton:active {
+      transform: scale(0.98);
+  }
+  
+  /* Responsive - Example: Hide links on smaller screens */
+  @media (max-width: 768px) {
+      .navLinks {
+          display: none; /* Hide links */
+      }
+      .navbar {
+          padding: 0 20px; /* Reduce padding */
+      }
+      .navContent {
+          justify-content: space-between; /* Space logo and button */
+      }
+      /* Ensure logo/button don't overlap if needed */
+  }

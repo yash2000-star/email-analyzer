@@ -1,0 +1,108 @@
+/* src/components/landing/Footer.module.css */
+.footer {
+  background-color: var(--bg-dark-main); /* Use main dark bg */
+  color: var(--text-light-secondary);
+  padding: 60px 40px 30px 40px; /* Generous padding, less at bottom */
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border-dark-subtle); /* Optional subtle separator */
+}
+
+.footerContent {
+  max-width: 1200px; /* Allow wider content for columns */
+  margin: 0 auto;
+}
+
+/* Link Grid Styling */
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
+  gap: 30px 20px; /* Row and Column gap */
+  margin-bottom: 50px; /* Space between grid and bottom bar */
+  padding-bottom: 30px; /* Space before bottom bar's border */
+  border-bottom: 1px solid var(--border-dark-subtle); /* Separator line */
+}
+
+.linkColumn h4 {
+  font-size: 0.85rem; /* Slightly smaller heading */
+  font-weight: 500; /* Medium weight */
+  color: var(--text-light-secondary); /* Dimmer heading */
+  margin-top: 0;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.linkColumn a {
+  display: block;
+  color: var(--text-light-primary); /* Brighter links */
+  text-decoration: none;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.linkColumn a:hover {
+  color: var(--accent-green); /* Use OUR green for hover */
+}
+
+/* Bottom Bar Styling */
+.bottomBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping */
+  gap: 15px;
+}
+
+.logoText {
+  font-weight: 600; /* Bolder logo */
+  font-size: 1rem;
+  color: var(--text-light-primary);
+}
+
+.socialLinks {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between icons */
+}
+
+.socialLinks a {
+  color: var(--text-light-secondary); /* Dimmer icon color */
+  font-size: 1.3rem; /* Icon size */
+  display: inline-block; /* Allows transform */
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.socialLinks a:hover {
+  color: var(--text-light-primary); /* Brighten icon on hover */
+  transform: scale(1.1); /* Slight scale */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .linksGrid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+        margin-bottom: 40px;
+        padding-bottom: 25px;
+    }
+     .bottomBar {
+        flex-direction: column; /* Stack logo and social icons */
+        align-items: center;
+        gap: 20px;
+    }
+}
+@media (max-width: 480px) {
+     .linksGrid {
+        grid-template-columns: 1fr; /* 1 column on very small screens */
+        text-align: center; /* Center text in single column */
+    }
+    .linkColumn h4 {
+        margin-bottom: 12px;
+    }
+     .linkColumn a {
+        margin-bottom: 10px;
+    }
+    .bottomBar {
+        margin-top: 10px;
+    }
+}

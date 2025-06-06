@@ -1,0 +1,34 @@
+/* src/components/landing/CallToActionSection.module.css */
+.cta {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #1d3557; /* Dark blue background */
+    color: white;
+  }
+  
+  .ctaTitle {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .ctaText {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    opacity: 0.9;
+  }
+  /* Reuse button styles or define specifics */
+  .ctaButton {
+    padding: 12px 25px;
+    font-size: 1rem;
+    color: #1d3557; /* Dark blue text */
+    background-color: #ffffff; /* White button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  .ctaButton:hover {
+    background-color: #f0f0f0; /* Slightly off-white hover */
+  }

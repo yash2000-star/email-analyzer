@@ -1,0 +1,9 @@
+/* src/pages/DashboardPage.module.css */
+.dashboardLayout {
+  display: flex;
+  flex-grow: 1; /* Allow dashboard layout to fill mainContent */
+  overflow: hidden; /* Prevent internal scrolling from affecting layout */
+  /* Height is implicitly 100% of parent (.mainContent) */
+}
+
+/* Child components control their own styles/width/flex */

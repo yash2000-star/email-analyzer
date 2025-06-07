@@ -1,63 +1,57 @@
 // src/components/landing/Footer.jsx
 import React from 'react';
-import { Link } from 'react-router-dom'; // Use Link for internal nav if needed
 import styles from './Footer.module.css';
-// Import icons for social links
-import { FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa'; // Example icons
+import Logo from '../../assets/logo.png'; // Import your logo
+import { FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa';
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContent}>
-
-        {/* Link Grid Section */}
-        <div className={styles.linksGrid}>
-          {/* Column 1: Product (Example) */}
-          <div className={styles.linkColumn}>
-            <h4>Product</h4>
-            {/* Use '#' for placeholders if pages don't exist yet */}
-            <Link to="/#features">Features</Link>
-            <Link to="/#security">Security</Link>
-            <Link to="/#integrations">Integrations</Link>
+        <div className={styles.topSection}>
+          {/* Left Side: Logo and Tagline */}
+          <div className={styles.brandColumn}>
+            <div className={styles.brandLogo}>
+                <img src={Logo} alt="InboXAI Compass Logo" className={styles.logoImage} />
+                <span>InboXAI Compass</span>
+            </div>
+            <p className={styles.tagline}>Find clarity in the inbox chaos.</p>
           </div>
-
-          {/* Column 2: Company (Example) */}
-          <div className={styles.linkColumn}>
-            <h4>Company</h4>
-            <Link to="/#about">About</Link>
-            <a href="mailto:your.email@example.com">Contact Us</a> {/* Mailto link */}
-            {/* <Link to="/careers">Careers</Link> */}
-          </div>
-
-          {/* Column 3: Resources (Example) */}
-          <div className={styles.linkColumn}>
-            <h4>Resources</h4>
-            <Link to="/#blog">Blog</Link>
-            <Link to="/#help">Help Center</Link>
-            {/* <Link to="/tutorials">Tutorials</Link> */}
-          </div>
-
-          {/* Column 4: Legal */}
-          <div className={styles.linkColumn}>
-            <h4>Legal</h4>
-            <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy</a>
-            <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">Terms</a>
-            {/* <a href="/aup" target="_blank" rel="noopener noreferrer">AUP</a> */}
+          
+          {/* Right Side: Link Grid */}
+          <div className={styles.linksGrid}>
+            <div className={styles.linkColumn}>
+              <h4>Product</h4>
+              <a href="/#features">Features</a>
+              <a href="/#security">Security</a>
+              <a href="https://github.com/your-repo/email-analyzer-frontend" target="_blank" rel="noopener noreferrer">Integrations</a>
+            </div>
+            <div className={styles.linkColumn}>
+              <h4>Company</h4>
+              <a href="/#about">About</a>
+              <a href="mailto:contact.yash.nirwan@gmail.com">Contact Us</a>
+            </div>
+            <div className={styles.linkColumn}>
+              <h4>Legal</h4>
+              {/* These would link to actual pages in a real app */}
+              <a href="#/privacy">Privacy Policy</a>
+              <a href="#/terms">Terms of Service</a>
+            </div>
           </div>
         </div>
 
         {/* Bottom Bar Section */}
         <div className={styles.bottomBar}>
-          <div className={styles.brandInfo}>
-            <span className={styles.logoText}>InboXAI Compass 🧭</span>
-            {/* Removed copyright from here, implied */}
-          </div>
+          <p className={styles.copyright}>
+            © {currentYear} InboXAI Compass. All Rights Reserved.
+          </p>
           <div className={styles.socialLinks}>
-            {/* Add your actual social links */}
-            <a href="https://github.com/your-profile" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a href="https://github.com/yash-nirwan" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <FaGithub />
             </a>
-            <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <a href="https://linkedin.com/in/yash-nirwan-b07212265" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <FaLinkedin />
             </a>
             <a href="https://twitter.com/your-profile" target="_blank" rel="noopener noreferrer" aria-label="Twitter">

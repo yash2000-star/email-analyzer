@@ -1,108 +1,133 @@
 /* src/components/landing/Footer.module.css */
 .footer {
-  background-color: var(--bg-dark-main); /* Use main dark bg */
+  background-color: #0d0d0d; /* Slightly different dark shade */
   color: var(--text-light-secondary);
-  padding: 60px 40px 30px 40px; /* Generous padding, less at bottom */
+  padding: 80px 20px 40px 20px;
   font-size: 0.9rem;
-  border-top: 1px solid var(--border-dark-subtle); /* Optional subtle separator */
+  border-top: 1px solid var(--border-dark-subtle);
 }
 
 .footerContent {
-  max-width: 1200px; /* Allow wider content for columns */
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Link Grid Styling */
+.topSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border-dark-subtle);
+}
+
+@media (min-width: 768px) {
+  .topSection {
+    flex-direction: row;
+    gap: 60px;
+  }
+}
+
+.brandColumn {
+  flex: 1;
+  min-width: 200px;
+}
+
+.brandLogo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text-light-primary);
+  margin-bottom: 15px;
+}
+
+.logoImage {
+  height: 60px;
+  width: auto;
+}
+
+.tagline {
+  margin: 0;
+  line-height: 1.6;
+  max-width: 250px;
+}
+
 .linksGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
-  gap: 30px 20px; /* Row and Column gap */
-  margin-bottom: 50px; /* Space between grid and bottom bar */
-  padding-bottom: 30px; /* Space before bottom bar's border */
-  border-bottom: 1px solid var(--border-dark-subtle); /* Separator line */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  flex: 2;
+  justify-content: flex-start;
+}
+
+@media (min-width: 768px) {
+  .linksGrid {
+    justify-content: flex-end;
+  }
+}
+
+.linkColumn {
+  min-width: 120px;
 }
 
 .linkColumn h4 {
-  font-size: 0.85rem; /* Slightly smaller heading */
-  font-weight: 500; /* Medium weight */
-  color: var(--text-light-secondary); /* Dimmer heading */
-  margin-top: 0;
-  margin-bottom: 18px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-light-secondary);
+  margin: 0 0 20px 0;
   text-transform: uppercase;
   letter-spacing: 0.8px;
 }
 
 .linkColumn a {
   display: block;
-  color: var(--text-light-primary); /* Brighter links */
+  color: var(--text-light-primary);
   text-decoration: none;
   margin-bottom: 12px;
-  font-size: 0.95rem;
   transition: color 0.2s ease;
 }
 
 .linkColumn a:hover {
-  color: var(--accent-green); /* Use OUR green for hover */
+  color: var(--accent-green);
 }
 
 /* Bottom Bar Styling */
 .bottomBar {
   display: flex;
+  flex-direction: column-reverse;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Allow wrapping */
-  gap: 15px;
+  gap: 20px;
 }
 
-.logoText {
-  font-weight: 600; /* Bolder logo */
-  font-size: 1rem;
-  color: var(--text-light-primary);
+@media (min-width: 768px) {
+  .bottomBar {
+    flex-direction: row;
+  }
+}
+
+.copyright {
+  margin: 0;
+  font-size: 0.85rem;
+  text-align: center;
 }
 
 .socialLinks {
   display: flex;
   align-items: center;
-  gap: 20px; /* Space between icons */
+  gap: 24px;
 }
 
 .socialLinks a {
-  color: var(--text-light-secondary); /* Dimmer icon color */
-  font-size: 1.3rem; /* Icon size */
-  display: inline-block; /* Allows transform */
+  color: var(--text-light-secondary);
+  font-size: 1.3rem;
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .socialLinks a:hover {
-  color: var(--text-light-primary); /* Brighten icon on hover */
-  transform: scale(1.1); /* Slight scale */
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .linksGrid {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
-        margin-bottom: 40px;
-        padding-bottom: 25px;
-    }
-     .bottomBar {
-        flex-direction: column; /* Stack logo and social icons */
-        align-items: center;
-        gap: 20px;
-    }
-}
-@media (max-width: 480px) {
-     .linksGrid {
-        grid-template-columns: 1fr; /* 1 column on very small screens */
-        text-align: center; /* Center text in single column */
-    }
-    .linkColumn h4 {
-        margin-bottom: 12px;
-    }
-     .linkColumn a {
-        margin-bottom: 10px;
-    }
-    .bottomBar {
-        margin-top: 10px;
-    }
+  color: var(--text-light-primary);
+  transform: translateY(-2px);
 }

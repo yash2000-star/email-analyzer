@@ -37,28 +37,75 @@
 
 /* --- Individual Email Item --- */
 .emailItem {
-  padding: 14px 18px; /* Slightly adjusted padding */
-  border-bottom: 1px solid var(--border-dark);
+  padding: 12px 15px; /* Slightly adjusted padding */
+  border-bottom: 1px solid var(--border-dark-accent, #383838);
   cursor: pointer;
   transition: background-color 0.15s ease;
   position: relative;
 }
 .emailItem:last-child { border-bottom: none; }
 
-.emailItem:hover { background-color: var(--bg-dark-tertiary); }
+.emailItem:hover { background-color: var(--bg-dark-tertiary, #252525); } 
 
 .emailItem.selected {
-  background-color: var(--accent-blue-light);
-  /* border-left: 3px solid var(--accent-blue); Remove border, bg is enough */
+ background-color: var(--accent-blue-selection, #2a3a5a);
+ border-left: 3px solid var(--accent-blue); 
+ padding-left: 12px;
 }
+
 /* Make text slightly brighter/bolder when selected */
 .emailItem.selected .sender,
 .emailItem.selected .subject {
-    color: var(--text-light-primary);
-    font-weight: 600; /* Make selected slightly bolder */
+     color: var(--text-light-primary-selected, #ffffff);
 }
+.emailItem.selected .date,
 .emailItem.selected .snippet {
-    color: var(--text-light-secondary); /* Keep snippet dimmer */
+    color: var(--text-light-secondary-selected, #bbbbbb);
+}
+
+/* --- Unread State (NEW) --- */
+.emailItem.unread .sender {
+  font-weight: 700; /* Even bolder for unread sender */
+  color: var(--text-light-unread-sender, #ffffff); /* Brighter color for unread sender */
+}
+.emailItem.unread .subject {
+  font-weight: 600; /* Bolder for unread subject */
+  color: var(--text-light-unread-subject, #f0f0f0); /* Brighter color for unread subject */
+}
+
+/* Optional: Add an unread indicator dot */
+.emailItem.unread::before {
+  content: '';
+  position: absolute;
+  left: 6px; /* Position from the left edge of .emailItem */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-blue); /* Your primary accent color */
+  border-radius: 50%;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Allow text content to take remaining space */
+  overflow: hidden; /* Important for text-overflow to work on children */
+}
+
+.avatarPlaceholder {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--accent-blue-dark, #3a5a8a); /* Example color, choose one from your palette */
+  color: var(--text-light-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex-shrink: 0; /* Prevent shrinking */
+  text-transform: uppercase;
 }
 
 /* --- Meta Row (Sender & Date) --- */
@@ -66,27 +113,28 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px; /* Increased space */
+  margin-bottom: 4px; /* Increased space */
 }
 .sender {
-font-weight: 500; /* Medium weight */
+font-weight: 600; /* Medium weight */
 font-size: 0.9rem;
 color: var(--text-light-primary); /* Brighter sender */
 white-space: nowrap;
 overflow: hidden;
 text-overflow: ellipsis;
-max-width: 70%;
+ max-width: calc(100% - 60px);
 }
+
 .date {
 font-size: 0.75rem;
 color: var(--text-light-secondary);
 flex-shrink: 0;
-margin-left: 10px;
+margin-left: 8px;
 }
 
 /* --- Subject & Snippet --- */
 .subject {
-  font-size: 0.9rem; /* Make subject same size as sender maybe */
+  font-size: 0.875rem; /* Make subject same size as sender maybe */
   font-weight: 400; /* Normal weight */
   margin-bottom: 6px; /* More space */
   color: var(--text-light-secondary); /* Dimmer subject */
@@ -96,8 +144,7 @@ margin-left: 10px;
 }
 .snippet {
   font-size: 0.85rem; /* Keep snippet slightly smaller */
-  color: var(--text-light-secondary);
-  opacity: 0.8;
+  color: var(--text-light-tertiary, #888); /* Even dimmer for snippet */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -116,7 +163,7 @@ margin-left: 10px;
   padding: 3px 8px;
   font-size: 0.7rem;
   font-weight: 500;
-  border-radius: 4px;
+  border-radius: 12px;
   display: inline-block;
   text-transform: capitalize; /* Capitalize status */
 }
@@ -154,16 +201,18 @@ margin-left: 10px;
 
 /* --- Skeleton Styles --- */
 .emailItemSkeleton {
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border-dark);
-  /* Match structure of real item for spacing */
-}
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border-dark-accent, #383838);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  }
 
 .emailItemSkeleton .metaRow { /* Reuse metaRow for spacing */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px; /* Slightly more space */
+  margin-bottom: 6px; /* Slightly more space */
 }
 
 /* Make skeleton lines inherit theme better */

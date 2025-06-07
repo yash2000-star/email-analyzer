@@ -1,0 +1,8 @@
+.landingPage {
+  /* This ensures our page background is consistent, especially if
+     other pages have different backgrounds. */
+  background-color: var(--bg-dark-main);
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrollbars from animations */
+}
+

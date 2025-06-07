@@ -1,34 +1,56 @@
 /* src/components/landing/CallToActionSection.module.css */
 .cta {
-    padding: 50px 20px;
+    padding: 100px 20px;
+    background-color: var(--bg-dark-main);
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
     text-align: center;
-    background-color: #1d3557; /* Dark blue background */
-    color: white;
-  }
+    padding: 50px 30px;
+    background-color: #0d0d0d;
+    border-radius: 20px;
+    border: 1px solid var(--border-dark-subtle);
+}
   
-  .ctaTitle {
-    font-size: 1.8rem;
-    font-weight: bold;
+.ctaTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
     margin-bottom: 15px;
-  }
-  
-  .ctaText {
+    color: var(--text-light-primary);
+}
+
+.ctaText {
     font-size: 1.1rem;
-    margin-bottom: 25px;
-    opacity: 0.9;
-  }
-  /* Reuse button styles or define specifics */
-  .ctaButton {
-    padding: 12px 25px;
-    font-size: 1rem;
-    color: #1d3557; /* Dark blue text */
-    background-color: #ffffff; /* White button */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-  }
+    margin-bottom: 35px;
+    color: var(--text-light-secondary);
+    line-height: 1.6;
+}
   
-  .ctaButton:hover {
-    background-color: #f0f0f0; /* Slightly off-white hover */
-  }
+.ctaButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #000000;
+    background-color: var(--accent-green);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+  
+.ctaButton:hover {
+    background-color: var(--accent-green-darker);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(112, 255, 112, 0.2);
+}
+
+.ctaButton:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: none;
+}

@@ -1,47 +1,48 @@
-// src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify'; // Import only ToastContainer here
-import 'react-toastify/dist/ReactToastify.css'; // Import default CSS
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-// Import Page components etc.
+// --- CORRECTED IMPORT PATHS ---
+// We are now importing from the 'layouts' folder we created.
+import PublicLayout from './layouts/PublicLayout'; 
+import DashboardLayout from './layouts/Layout'; 
+
+// Import Page components (These paths should be correct)
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import AuthChecker from './components/AuthChecker';
-import Layout from './components/Layout';
 
 function App() {
   return (
     <Router>
-       {/* ToastContainer Setup */}
-        <ToastContainer
-            position="bottom-right"
-            autoClose={4000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark" // Matches our app theme
-        />
-        {/* End ToastContainer */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
 
-      {/* Route Definitions */}
       <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-
-        {/* Protected Routes with Layout */}
-        <Route element={<AuthChecker><Layout /></AuthChecker>}>
-           <Route path="/dashboard" element={<DashboardPage />} />
-           {/* Example: <Route path="/settings" element={<SettingsPage />} /> */}
+        {/* --- PUBLIC ROUTES (using PublicLayout) --- */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Route>
 
-        {/* Catch-all 404 Route */}
+        {/* --- PROTECTED ROUTES (using DashboardLayout) --- */}
+        <Route element={<AuthChecker><DashboardLayout /></AuthChecker>}>
+           <Route path="/dashboard" element={<DashboardPage />} />
+        </Route>
+
+        {/* --- CATCH-ALL 404 --- */}
         <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
     </Router>

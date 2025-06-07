@@ -114,7 +114,8 @@ const processUserEmails = async () => {
                             summary: analysisResult?.summary || null,
                             actionPoints: analysisResult?.actionPoints || [],
                             status: 'pending',
-                            updatedAt: new Date()
+                            updatedAt: new Date(),
+                            isRead: email.isRead,
                             // Optional: Store analysisError here if needed:
                             // analysisErrorInfo: analysisError ? { message: analysisError } : null
                         };

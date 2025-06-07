@@ -52,14 +52,18 @@ const actionPointSchema = new mongoose.Schema({
    isRead: {
     type: Boolean,
     default: false, // Default to unread when first processed
-    required: true,
+
   },
+
 }, {
   timestamps: true // Automatically adds createdAt and updatedAt fields
 });
 
 // Ensure uniqueness per user and email ID
 actionPointSchema.index({ userId: 1, emailId: 1 }, { unique: true });
+actionPointSchema.index({ userId: 1, createdAt: 1 });
+actionPointSchema.index({ userId: 1, emailDate: 1 }); // For sorting by email date
+
 
 
 const ActionPoint = mongoose.model('ActionPoint', actionPointSchema);

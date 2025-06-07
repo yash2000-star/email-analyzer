@@ -153,7 +153,7 @@ const getUnreadEmails = async (userId) => {
           const msgResponse = await gmail.users.messages.get({
             userId: 'me',
             id: message.id,
-            format: 'full', // 'full' gives payload, headers, etc. 'metadata' is less info.
+            format: 'METADATA', // 'full' gives payload, headers, etc. 'metadata' is less info.
           });
 
           const payload = msgResponse.data.payload;
@@ -165,6 +165,9 @@ const getUnreadEmails = async (userId) => {
             return header ? header.value : 'N/A';
           };
 
+          const labelIds = msgResponse.data.labelIds || [];
+           const isReadStatus = false;
+
           const emailData = {
             id: msgResponse.data.id,
             threadId: msgResponse.data.threadId,
@@ -172,8 +175,9 @@ const getUnreadEmails = async (userId) => {
             from: getHeader('From'),
             date: getHeader('Date'),
             snippet: msgResponse.data.snippet, // Short preview from Gmail
-            body: getEmailBody(payload), // Extract plain text body
-            // labelIds: msgResponse.data.labelIds // Useful for debugging/verification
+           // body: getEmailBody(payload),  Extract plain text body
+             labelIds: labelIds, // Good to have for debugging or other logic
+          isRead: isReadStatus,
           };
           return emailData;
 

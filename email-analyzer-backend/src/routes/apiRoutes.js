@@ -71,7 +71,7 @@ router.get('/processed-emails', async (req, res) => { // <-- Route path changed
         })
         .sort({ emailDate: -1 }) // *** Sort by the actual email date descending ***
         .select( // Select only the fields needed for the list view
-            '_id emailId emailSender emailSubject emailSnippet emailDate status actionPoints' // Include actionPoints to check length
+            '_id emailId emailSender emailSubject emailSnippet emailDate status isRead actionPoints' // Include actionPoints to check length
         )
         .lean(); // Use lean for performance
 
@@ -178,6 +178,7 @@ router.get('/emails/:emailId/content', async (req, res) => {
              bodyType: emailBodyResult.type,
              id: originalEmailData.id,
              threadId: originalEmailData.threadId
+             
          };
 
         // 3. Fetch Stored AI Analysis (Summary/Action Points) from our DB

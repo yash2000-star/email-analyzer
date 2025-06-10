@@ -1,80 +1,91 @@
 // src/components/dashboard/Sidebar.jsx
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// --- UPDATED: SETTINGS LINK NOW FUNCTIONAL ---
+
+import React from 'react';
+// --- NEW: Import Link component ---
+import { Link } from 'react-router-dom';
 import styles from './Sidebar.module.css';
-import { FaInbox, FaRegStar, FaRegCalendarAlt, FaTag, FaRegClock } from 'react-icons/fa'; // Example icons
+import { FaInbox, FaRegStar, FaTasks, FaChevronLeft, FaChevronRight, FaCog, FaTag } from 'react-icons/fa';
+import logo from '../../assets/logo.png';
 
-const formatDate = (dateString) => {
-    if (!dateString) return '';
-    // Adding UTC timezone hint for consistency
-    return new Date(dateString + 'T00:00:00Z').toLocaleDateString(undefined, {
-         year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'
-    });
-};
+function Sidebar({ isCollapsed, onToggle, activeView, onSelectView, categories }) {
 
-function Sidebar({ selectedFilter, onSelectFilter }) {
-    const [dates, setDates] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  // We now determine the selected item based on the activeView state
+  // A helper function makes the JSX cleaner
+  const getNavItemClass = (viewName) => {
+    return `${styles.navItem} ${activeView === viewName ? styles.selected : ''}`;
+  }
 
-    useEffect(() => {
-        const fetchDates = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const response = await axios.get('/api/summaries');
-                const uniqueDates = [
-                    ...new Set(response.data.map(s => s.date.split('T')[0]))
-                ].sort((a, b) => new Date(b) - new Date(a));
-                setDates(uniqueDates);
-            } catch (err) {
-                console.error("Error fetching summary dates:", err);
-                setError("Failed to load dates");
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchDates();
-    }, []);
+  return (
+    <div className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ''}`}>
+      
+      <button onClick={onToggle} className={styles.toggleButton}>
+        {isCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
+      </button>
 
-    const handleFilterClick = (type, value) => {
-        onSelectFilter({ type, value });
-    };
+      <div className={styles.logoContainer}>
+        <img src={logo} alt="InboxAI Compass Logo" className={styles.logo} />
+        <h2 className={styles.logoText}>INBOXAI COMPASS</h2>
+      </div>
 
-    return (
-        <div className={styles.sidebar}>
-            {/* Mock Static Items - Replace with real logic later */}
-            <div
-                className={`${styles.navItem} ${selectedFilter.type === 'category' && selectedFilter.value === 'Inbox' ? styles.selected : ''}`}
-                onClick={() => handleFilterClick('category', 'Inbox')}
-            >
-                <FaInbox className={styles.icon} /> Inbox
-            </div>
-             <div
-                className={`${styles.navItem} ${selectedFilter.type === 'category' && selectedFilter.value === 'Starred' ? styles.selected : ''}`}
-                onClick={() => handleFilterClick('category', 'Starred')}
-            >
-                <FaRegStar className={styles.icon} /> Starred
-            </div>
+      <nav className={styles.navigation}>
+        {/* --- UPDATED to use Link and the helper function --- */}
+        <Link 
+          to="/dashboard"
+          className={getNavItemClass('inbox')}
+          onClick={() => onSelectView('inbox')}
+        >
+          <FaInbox className={styles.icon} />
+          <span className={styles.navText}>Inbox</span>
+        </Link>
 
-            <hr className={styles.divider}/>
+        <a
+          className={getNavItemClass('starred')}
+          onClick={() => onSelectView('starred')}
+        >
+          <FaRegStar className={styles.icon} />
+          <span className={styles.navText}>Starred</span>
+        </a>
 
-            {/* Dynamic Dates */}
-            <div className={styles.sectionTitle}><FaRegCalendarAlt className={styles.icon} /> By Date</div>
-            {loading && <div className={styles.loading}>Loading...</div>}
-            {error && <div className={styles.error}>{error}</div>}
-            {!loading && !error && dates.map(dateStr => (
-                 <div
-                    key={dateStr}
-                    className={`${styles.navItem} ${styles.dateItem} ${selectedFilter.type === 'date' && selectedFilter.value === dateStr ? styles.selected : ''}`}
-                    onClick={() => handleFilterClick('date', dateStr)}
-                >
-                    {formatDate(dateStr)}
-                </div>
+        <a
+          className={getNavItemClass('action-items')}
+          onClick={() => onSelectView('action-items')}
+        >
+          <FaTasks className={styles.icon} />
+          <span className={styles.navText}>Action Items</span>
+        </a>
+
+        {categories && categories.length > 0 && (
+          <div className={styles.categorySection}>
+            <h4 className={styles.categoryHeader}>Categories</h4>
+            {categories.map(category => (
+              <a
+                key={category}
+                className={getNavItemClass(category)}
+                onClick={() => onSelectView(category)}
+              >
+                <FaTag className={styles.icon} />
+                <span className={styles.navText}>{category}</span>
+              </a>
             ))}
-            {!loading && !error && dates.length === 0 && <div className={styles.noDates}>No processed dates.</div>}
-        </div>
-    );
+          </div>
+        )}
+      </nav>
+
+      <div className={styles.sidebarFooter}>
+        <div className={styles.divider}></div>
+        {/* --- UPDATED: This is now a Link that goes to the new page --- */}
+        <Link
+          to="/dashboard/settings"
+          className={getNavItemClass('settings')}
+          onClick={() => onSelectView('settings')}
+        >
+          <FaCog className={styles.icon} />
+          <span className={styles.navText}>Settings</span>
+        </Link>
+      </div>
+    </div>
+  );
 }
 
 export default Sidebar;

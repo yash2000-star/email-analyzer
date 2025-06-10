@@ -1,220 +1,271 @@
-/* src/components/dashboard/EmailDetailPane.module.css */
+/* File: email-analyzer-frontend/src/components/dashboard/EmailDetailPane.module.css */
+/* --- V4: FINAL POLISH --- */
+
 .detailPane {
   flex-grow: 1;
-  padding: 25px 35px; /* Adjust padding */
+  height: 100vh;
   overflow-y: auto;
-  background-color: var(--bg-dark-primary);
-  height: 100%;
+  background-color: var(--background-primary);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.placeholder { /* Center placeholder text */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    text-align: center;
-    color: var(--text-light-secondary);
-    font-size: 1.1rem;
-    font-style: italic;
+.detailHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 48px;
+  border-bottom: 1px solid var(--border-primary);
+  flex-shrink: 0;
 }
-.error { color: var(--color-red-error); }
+
+.globalSearchBar {
+  width: 100%;
+  max-width: 450px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-primary);
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.globalSearchBar:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+}
+
+/* --- UPDATED: User Profile Styles --- */
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 24px;
+  transition: background-color 0.2s ease;
+}
+.userProfile:hover {
+  background-color: var(--background-secondary);
+}
+.userProfile span {
+  font-weight: 500;
+  color: var(--text-primary);
+  padding-right: 8px;
+}
+
+.userAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--accent-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.contentWrapper {
+  padding: 32px 48px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
 
 .emailHeader {
-  margin-bottom: 25px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border-dark);
+  padding-bottom: 24px;
+  flex-shrink: 0;
+}
+.subjectLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 12px;
 }
 .subject {
-  font-size: 1.6rem; /* Larger subject */
-  font-weight: 600; /* Bolder */
-  margin-bottom: 18px; /* More space below subject */
-  color: var(--text-light-primary);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
   line-height: 1.3;
+}
+.starButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 8px;
+  border-radius: 50%;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.starButton:hover {
+  background-color: var(--background-tertiary);
+  color: #f1c40f;
 }
 .metaLine {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 16px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
 }
-.from, .date {
-  font-size: 0.9rem; /* Slightly larger metadata */
-  color: var(--text-light-secondary);
-}
-.from strong, .date strong {
-  color: var(--text-light-primary);
+.metaLine strong {
+  color: var(--text-primary);
   font-weight: 500;
-  margin-right: 6px; /* Space after label */
 }
 
-
-
-.sectionTitle {
-  margin-top: 30px; /* Space above section titles */
-  margin-bottom: 18px; /* Space below section titles */
-  font-size: 0.85rem; /* Smaller title */
+/* --- UPDATED: Cleaner Section Header Style --- */
+.sectionHeader {
+  font-size: 1rem;
   font-weight: 600;
-  color: var(--text-light-secondary); /* Dimmer title */
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  border-bottom: 1px solid var(--border-dark);
-  padding-bottom: 10px;
+  color: var(--text-primary);
+  margin-top: 40px;
+  margin-bottom: 24px;
 }
-
+.analysisSection .sectionHeader {
+  margin-top: 0; /* No top margin for the first section */
+}
 
 .analysisSection {
-  background-color: var(--bg-dark-secondary); /* Keep distinct background */
-  padding: 20px 25px; /* Adjust padding */
-  border-radius: 8px;
-  margin-bottom: 30px;
-  border: 1px solid var(--border-dark);
+  flex-shrink: 0;
+}
+.aiGrid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 1200px) {
+  .aiGrid {
+    grid-template-columns: 2fr 1fr;
+    align-items: flex-start;
+  }
+}
+.summaryAndActions {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.metaCards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.summary {
-  margin-top: 10px; /* Add space above summary if title removed */
-  margin-bottom: 20px;
-  line-height: 1.6;
-  font-size: 1rem; /* Make summary more prominent */
-  color: var(--text-light-primary); /* Brighter summary text */
+.aiCard {
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  padding: 24px;
 }
-.summary strong {
-  /* Style label if needed, or remove if implied */
-  /* display: block; margin-bottom: 5px; color: var(--accent-green); */
-  display: none; /* Hide "Summary:" label? */
+.aiCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  font-size: 1.25rem;
 }
-
-.actionListLabel { /* Add a label for action points */
+.aiCardHeader h4 {
+  font-size: 1rem;
   font-weight: 600;
-  color: var(--text-light-primary);
-  margin-bottom: 8px;
-  display: block;
-  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin: 0;
 }
-.actionList {
-  margin-top: 0;
-  margin-bottom: 25px;
-  padding-left: 25px;
+.aiCardContent {
   font-size: 0.95rem;
-  line-height: 1.7; /* Increase line spacing */
-  color: var(--text-light-secondary); /* Dimmer action points */
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.aiCardContent p {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.actionList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 .actionList li {
-  margin-bottom: 8px; /* More space between points */
+  background-color: var(--background-tertiary);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border-left: 3px solid var(--accent-primary);
+  color: var(--text-primary);
 }
 
-.statusSection {
-  display: flex;
+.tag {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 20px;
-  border-top: 1px dashed var(--border-dark);
-  padding-top: 20px;
-  flex-wrap: wrap;
-  gap: 15px; /* Increased gap */
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--text-primary);
 }
-.statusLabel {
+.categoryTag {
+  background-color: rgba(59, 130, 246, 0.2);
+  border: 1px solid var(--accent-primary);
+  color: var(--accent-primary-hover);
+}
+.sentimentPositive {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+}
+.sentimentNegative {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+}
+.sentimentNeutral {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+}
+
+.emailBody {
+  flex-grow: 1;
+}
+.bodyContainer {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+.bodyContainer * {
+  color: inherit !important;
+  background-color: transparent !important;
+  font-family: inherit !important;
+}
+.bodyContainer a {
+  color: var(--accent-primary) !important;
+  text-decoration: underline;
+}
+.bodyContainer a:hover {
+  color: var(--accent-primary-hover) !important;
+}
+
+.placeholderContainer {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 10px; /* More space */
-  font-weight: 500;
-  font-size: 0.95rem; /* Slightly larger status */
+  height: 100%;
+  color: var(--text-secondary);
+  text-align: center;
+  user-select: none;
 }
-
-.buttonGroup {
-   display: flex;
-   gap: 10px;
+.placeholderIcon {
+  color: var(--border-primary);
+  margin-bottom: 24px;
 }
-.button {
-  padding: 7px 14px; /* Adjust padding */
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.85em;
-  font-weight: 500;
-  transition: opacity 0.2s ease, background-color 0.2s ease;
-}
-.button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-.button:hover:not(:disabled) {
-    opacity: 0.85;
-}
-.doneButton {
-  background-color: var(--color-green-done);
-  color: var(--bg-dark-primary); /* Dark text on light green */
-}
-.pendingButton {
-  background-color: var(--color-yellow-pending);
-  color: var(--bg-dark-primary); /* Dark text on light yellow */
-}
-
-.emailBody { margin-top: 30px; }
-.sectionTitle {
+.placeholderContainer h2 {
+  color: var(--text-primary);
   font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: var(--text-light-primary);
-}
-
-
-/* Container for rendered HTML */
-.htmlBodyContainer {
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: var(--text-light-secondary);
-}
-.htmlBodyContainer a { color: var(--accent-blue); text-decoration: underline;}
-.htmlBodyContainer img { max-width: 100%; height: auto; margin: 10px 0; }
-.htmlBodyContainer p { margin: 0 0 1em 0; }
-.htmlBodyContainer strong { color: var(--text-light-primary); font-weight: 600; }
-
-/* NEW Styles for Plain Text Rendering */
-.plainBodyContainer {
-    font-family: 'Menlo', 'Consolas', monospace; /* Monospace font */
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: var(--text-light-secondary);
-    background-color: var(--bg-dark-secondary); /* Match AI section? */
-    padding: 15px 20px;
-    border: 1px solid var(--border-dark);
-    border-radius: 5px;
-    white-space: normal; /* Allow wrapping now */
-}
-
-.plainBodyLine {
-    min-height: 1.6em; /* Ensure empty lines take up space */
-    word-wrap: break-word; /* Break long words/URLs */
-    white-space: pre-wrap; /* Preserve whitespace within the line */
-}
-
-.linkifiedUrl {
-    color: var(--accent-blue);
-    text-decoration: underline;
-    /* Optional: Prevent extremely long URLs from breaking layout */
-    word-break: break-all;
-}
-
-/* Make skeleton lines inherit theme better */
-.detailPane span.react-loading-skeleton {
-  border-radius: 4px;
-}
-
-
-/* src/components/dashboard/EmailDetailPane.module.css */
-/* ... Add this rule at the end or near button styles ... */
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.spinner {
-  animation: spin 1s linear infinite;
-}
-
-/* Ensure buttons accommodate spinner */
-.button svg.spinner {
-    font-size: 0.9em; /* Adjust size relative to button text */
 }

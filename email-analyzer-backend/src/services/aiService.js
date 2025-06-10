@@ -1,124 +1,93 @@
-// src/services/aiService.js
+// File: email-analyzer-backend/src/services/aiService.js
+// --- UPDATED WITH ROBUST JSON PARSING ---
 
-// --- Remove or comment out OpenAI imports ---
-// const OpenAI = require('openai');
+ const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = require("@google/generative-ai");
 
-// --- Import Google Generative AI ---
-const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = require("@google/generative-ai");
-
-// --- Configure the Google AI client ---
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-// --- Safety Settings (Recommended for Gemini) ---
+ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const safetySettings = [
   { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
   { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
   { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
   { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
 ];
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash-latest",
+  safetySettings
+});
 
 const analyzeEmailContent = async (subject, body) => {
-  console.log(`Analyzing email with Subject (using Gemini): "${subject.substring(0, 50)}..."`);
-
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash-latest",
-    safetySettings
-  });
+  // We check for an empty body here to avoid making a useless API call
+  if (!body || body.trim() === '') {
+    console.log(`[AI Skip] Skipping analysis for "${subject}" due to empty body.`);
+    return {
+      summary: "This email has no text content to analyze.",
+      category: "Other", sentiment: "Neutral", actionPoints: []
+    };
+  }
 
   const prompt = `
-    Analyze the following email content and provide:
-    1. A concise summary (1-2 sentences).
-    2. A list of key action items or deadlines mentioned. If no specific action is required, state that.
+    Analyze the following email content. Provide your analysis ONLY as a single, valid JSON object.
 
-    Email Subject: "${subject}"
-
-    Email Body:
+     Email Subject: "${subject}"
+     Email Body:
     """
-    ${body.substring(0, 3500)}
+    ${body.substring(0, 4000)}
     """
 
-    Please format your response ONLY as a JSON object with the following structure:
+    JSON structure required:
     {
-      "summary": "Your concise summary here.",
-      "actionPoints": ["Action item 1", "Action item 2", "Deadline: YYYY-MM-DD"]
+      "summary": "A concise 1-2 sentence summary of the email.",
+      "category": "Choose ONE category: Job Alert, Promotion, Social, Invoice, Urgent, Personal, Other.",
+      "sentiment": "Choose ONE sentiment: Positive, Neutral, Negative.",
+      "actionPoints": ["A list of key action items or deadlines mentioned. e.g., 'Reply by Friday'. If none, return an empty array."]
     }
-    If there are no action points, return an empty array for "actionPoints". Ensure the output is valid JSON.
+
+    Ensure the output is only the JSON object and nothing else.
   `;
 
   const generationConfig = {
-    temperature: 0.5,
-    maxOutputTokens: 250,
+    temperature: 0.3,
+    maxOutputTokens: 500,
+    responseMimeType: "application/json",
   };
 
   try {
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig,
-    });
+    const result = await model.generateContent(prompt, generationConfig);
     const response = result.response;
-
-    if (!response || !response.candidates || response.candidates.length === 0) {
-      const blockReason = response?.promptFeedback?.blockReason;
-      if (blockReason) {
-        throw new Error(`Gemini response blocked due to safety settings: ${blockReason}`);
-      }
-      throw new Error('Gemini response is empty or missing candidates.');
-    }
-
-    const finishReason = response.candidates[0]?.finishReason;
-    if (finishReason && finishReason !== 'STOP' && finishReason !== 'MAX_TOKENS') {
-      throw new Error(`Gemini generation finished unexpectedly: ${finishReason}`);
-    }
-
-    const responseContent = response.candidates[0]?.content?.parts?.[0]?.text;
+    let responseContent = response.candidates[0]?.content?.parts?.[0]?.text;
 
     if (!responseContent) {
-      console.warn("Gemini response content is empty despite successful finish reason.");
-      throw new Error('Gemini response content is empty.');
+      const blockReason = response?.promptFeedback?.blockReason;
+      if (blockReason) throw new Error(`Gemini response blocked: ${blockReason}`);
+      throw new Error('Gemini response is empty.');
     }
 
-    console.log("Raw Gemini Response:", responseContent);
+    // --- NEW ROBUST JSON PARSING LOGIC ---
+    // It finds the first '{' and last '}' and extracts the content between them.
+    const firstBraceIndex = responseContent.indexOf('{');
+    const lastBraceIndex = responseContent.lastIndexOf('}');
 
-    // --- New JSON Parsing Logic (Your Update) ---
-    let analysisResult;
-    try {
-      const firstBraceIndex = responseContent.indexOf('{');
-      const lastBraceIndex = responseContent.lastIndexOf('}');
-
-      if (firstBraceIndex === -1 || lastBraceIndex === -1 || lastBraceIndex < firstBraceIndex) {
-        console.error("Could not find valid JSON structure (start '{' and end '}') in AI response.");
-        console.error("Raw response:", responseContent);
-        throw new Error(`AI response does not appear to contain a valid JSON object: ${responseContent.substring(0, 100)}...`);
-      }
-
-      const potentialJson = responseContent.substring(firstBraceIndex, lastBraceIndex + 1);
-      console.log("Extracted potential JSON string:", potentialJson);
-
-      analysisResult = JSON.parse(potentialJson);
-    } catch (parseError) {
-      console.error("Failed to parse extracted AI response as JSON:", parseError);
-      console.error("Raw response content that caused failure:", responseContent);
-      throw new Error(`AI returned non-JSON or malformed JSON response after extraction attempt: ${responseContent.substring(0,100)}...`);
+    if (firstBraceIndex === -1 || lastBraceIndex === -1) {
+      throw new Error(`AI response did not contain a valid JSON object.`);
     }
 
-    // --- Existing validation block ---
-    if (!analysisResult || typeof analysisResult.summary !== 'string' || !Array.isArray(analysisResult.actionPoints)) {
-      console.error("Parsed AI response has unexpected structure:", analysisResult);
-      throw new Error('AI response structure is invalid after parsing.');
+    const jsonString = responseContent.substring(firstBraceIndex, lastBraceIndex + 1);
+    const analysisResult = JSON.parse(jsonString);
+    // --- END OF NEW LOGIC ---
+
+    if (!analysisResult || typeof analysisResult.summary !== 'string' || typeof analysisResult.category !== 'string' || typeof analysisResult.sentiment !== 'string' || !Array.isArray(analysisResult.actionPoints)) {
+      throw new Error('AI response JSON structure is invalid after parsing.');
     }
 
-    console.log(`Analysis complete (Gemini) for Subject: "${subject.substring(0, 50)}..."`);
-    return {
-      summary: analysisResult.summary,
-      actionPoints: analysisResult.actionPoints
-    };
+    return analysisResult;
 
   } catch (error) {
     console.error(`Error analyzing email content with Gemini: ${error.message}`);
-    throw error;
+    return {
+      summary: "AI analysis failed for this email.",
+      category: "Other", sentiment: "Neutral", actionPoints: []
+    };
   }
 };
 
-module.exports = {
-  analyzeEmailContent,
-};
+module.exports = { analyzeEmailContent };

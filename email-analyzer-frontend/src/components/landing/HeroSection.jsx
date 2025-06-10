@@ -107,7 +107,7 @@ function HeroSection() {
           </motion.p>
           <motion.div variants={itemVariants}>
             <button onClick={handleLogin} className={styles.ctaButton}>
-              Connect Your Google Account
+              Get Started with Google
             </button>
           </motion.div>
         </div>

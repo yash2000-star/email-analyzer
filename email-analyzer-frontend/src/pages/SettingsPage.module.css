@@ -1,0 +1,119 @@
+/* src/pages/SettingsPage.module.css */
+/* --- NEW FILE --- */
+
+.settingsPage {
+    padding: 32px 48px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.header {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: var(--text-primary);
+}
+
+.settingsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+}
+
+.settingsCard {
+    background-color: var(--background-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardHeader {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 24px 0;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-primary);
+}
+
+/* Profile Card Specifics */
+.profileContent {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.profileAvatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--accent-primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+.profileDetails {
+    display: flex;
+    flex-direction: column;
+}
+.profileName {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.profileEmail {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Connection Card Specifics */
+.connectionContent {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+.logoutButton {
+    margin-top: auto; /* Pushes the button to the bottom */
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--danger);
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s ease;
+}
+.logoutButton:hover {
+    background-color: rgba(239, 68, 68, 0.2);
+}
+
+/* Placeholder Card Specifics */
+.placeholderCard {
+    background-color: transparent;
+    border-style: dashed;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--text-secondary);
+}
+.placeholderContent p {
+    margin-top: 16px;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+.placeholderContent span {
+    font-size: 0.8rem;
+    font-style: italic;
+}

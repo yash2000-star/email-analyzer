@@ -1,29 +1,39 @@
-// src/components/Layout.jsx
+// src/layouts/Layout.jsx
+// --- DEFINITIVE FIX: PASSING DOWN THE USER'S EMAIL ---
+
 import React, { useState, useEffect } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import styles from './Layout.module.css';
 import { FaSignOutAlt } from 'react-icons/fa';
 
 function Layout() {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState('User');
-  const [isLoadingUser, setIsLoadingUser] = useState(true);
+  const location = useLocation();
+
+  // This state is the single source of truth for the user's info
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState(''); // --- NEW STATE FOR EMAIL ---
+  const [isUserLoading, setIsLoadingUser] = useState(true);
+  
+  const isDashboard = location.pathname.startsWith('/dashboard');
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       setIsLoadingUser(true);
       try {
         const response = await axios.get('/auth/status');
-        if (response.data.isAuthenticated && response.data.user) {
+        if (response.data.isAuthenticated && response.data.user && response.data.user.name) {
           setUserName(response.data.user.name.split(' ')[0] || 'User');
+          setUserEmail(response.data.user.email || 'No email found'); // --- SET THE EMAIL HERE ---
         } else {
-          console.warn("User not authenticated in Layout fetch.");
           setUserName('User');
+          setUserEmail('N/A');
         }
       } catch (error) {
         console.error("Failed to fetch user info for layout:", error);
         setUserName('User');
+        setUserEmail('Could not load');
       } finally {
         setIsLoadingUser(false);
       }
@@ -41,27 +51,31 @@ function Layout() {
   };
 
   return (
-    <div className={styles.layout}>
-      <header className={styles.header}>
-        <div className={styles.headerLeft}>
-          <Link to="/dashboard" className={styles.logo}>
-            InboXAI Compass 🧭
-          </Link>
-        </div>
-        <div className={styles.headerCenter}>
-          <input type="search" placeholder="Search emails..." className={styles.searchBar} disabled />
-        </div>
-        <div className={styles.headerRight}>
-          <span className={styles.userName}>
-            {isLoadingUser ? '...' : userName}
-          </span>
-          <button onClick={handleLogout} className={styles.logoutButton} title="Logout">
-            <FaSignOutAlt />
-          </button>
-        </div>
-      </header>
+    <div className={`${styles.layout} ${isDashboard ? styles.dashboardActive : ''}`}>
+      {!isDashboard && (
+        <header className={styles.header}>
+          <div className={styles.headerLeft}>
+            <Link to="/dashboard" className={styles.logo}>
+              InboXAI Compass 🧭
+            </Link>
+          </div>
+          <div className={styles.headerCenter}>
+            <input type="search" placeholder="Search..." className={styles.searchBar} disabled />
+          </div>
+          <div className={styles.headerRight}>
+            <span className={styles.userName}>
+              {isUserLoading ? '...' : userName}
+            </span>
+            <button onClick={handleLogout} className={styles.logoutButton} title="Logout">
+              <FaSignOutAlt />
+            </button>
+          </div>
+        </header>
+      )}
+
       <main className={styles.mainContent}>
-        <Outlet />
+        {/* --- UPDATED: Pass the userEmail down through the context --- */}
+        <Outlet context={{ userName, isUserLoading, userEmail }} />
       </main>
     </div>
   );

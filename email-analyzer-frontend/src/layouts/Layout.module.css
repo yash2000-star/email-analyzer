@@ -1,74 +1,62 @@
-/* src/components/Layout.module.css */
+/* src/layouts/Layout.module.css */
+/* --- DEFINITIVE FIX: CENTRALIZED DASHBOARD THEME --- */
+
 .layout {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f5f7;
 }
 
 .header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 25px;
-  height: 60px;
-  background-color: var(--bg-dark-secondary);
-  border-bottom: 1px solid var(--border-dark);
-  color: var(--text-light-primary);
+  align-items: center;
+  padding: 12px 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
   flex-shrink: 0;
 }
+/* ... other header styles ... */
+.headerLeft .logo { font-size: 1.2rem; font-weight: 600; text-decoration: none; color: #1a202c; }
+.headerCenter .searchBar { padding: 8px 12px; border-radius: 6px; border: 1px solid #cbd5e0; min-width: 300px; }
+.headerRight { display: flex; align-items: center; gap: 16px; }
+.userName { font-weight: 500; color: #2d3748; }
+.logoutButton { background: none; border: none; cursor: pointer; color: #718096; font-size: 1.1rem; padding: 5px; }
+.logoutButton:hover { color: #1a202c; }
 
-.headerLeft { flex: 1; }
-.logo {
-  text-decoration: none;
-  color: var(--text-light-primary);
-  font-weight: bold;
-  font-size: 1.1rem;
-}
 
-.headerCenter {
-  flex: 2;
-  display: flex;
-  justify-content: center;
+/* --- THE MAGIC IS HERE --- */
+.layout.dashboardActive {
+  height: 100vh;
 }
-.searchBar {
-    width: 100%;
-    max-width: 500px;
-    padding: 8px 15px;
-    border-radius: 15px;
-    border: 1px solid var(--border-dark);
-    background-color: var(--bg-dark-tertiary);
-    color: var(--text-light-primary);
-    font-size: 0.9rem;
-    outline: none;
-}
-.searchBar:focus { border-color: var(--accent-blue); }
-.searchBar::placeholder { color: var(--text-light-secondary); }
+.layout.dashboardActive .mainContent {
+  padding: 0;
+  height: 100%;
+  
+  /* --- THE DASHBOARD DESIGN SYSTEM NOW LIVES HERE --- */
+  --font-family: 'Inter', sans-serif;
+  --background-primary: #121212;
+  --background-secondary: #1E1E1E;
+  --background-tertiary: #2a2a2e;
+  --text-primary: #EAEAEA;
+  --text-secondary: #A0A0A0;
+  --text-disabled: #6E6E6E;
+  --border-primary: #333333;
+  --border-divider: #262626;
+  --accent-primary: #3b82f6;
+  --accent-primary-hover: #60a5fa;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
 
-.headerRight {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  /* Apply the theme to all pages inside the dashboard */
+  font-family: var(--font-family);
+  background-color: var(--background-primary);
+  color: var(--text-primary);
 }
-.userName {
-    margin-right: 15px;
-    font-size: 0.9rem;
-}
-.logoutButton {
-  background: none;
-  border: none;
-  color: var(--icon-color);
-  cursor: pointer;
-  font-size: 1.2rem;
-  padding: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.logoutButton:hover { color: var(--text-light-primary); }
 
 .mainContent {
-    flex-grow: 1;
-    display: flex; /* Important: Make main content flex container for dashboard */
-    overflow: hidden; /* Prevent main content from causing body scroll */
+  flex-grow: 1;
+  padding: 24px; /* Padding for non-dashboard pages */
 }

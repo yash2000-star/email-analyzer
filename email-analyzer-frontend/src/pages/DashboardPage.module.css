@@ -1,9 +1,22 @@
-/* src/pages/DashboardPage.module.css */
-.dashboardLayout {
-  display: flex;
-  flex-grow: 1; /* Allow dashboard layout to fill mainContent */
-  overflow: hidden; /* Prevent internal scrolling from affecting layout */
-  /* Height is implicitly 100% of parent (.mainContent) */
+.dashboardContainer {
+  height: 100vh;
+  /* overflow: hidden; -- This was removed in a previous step */
+
+  display: grid;
+  grid-template-columns: 260px 400px 1fr;
+  transition: grid-template-columns 0.3s ease-in-out;
 }
 
-/* Child components control their own styles/width/flex */
+.dashboardContainer.sidebarCollapsed {
+  grid-template-columns: 80px 400px 1fr;
+}
+
+/* These global 'a' tag rules are still useful to have scoped here */
+.dashboardContainer a {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+.dashboardContainer a:hover {
+  color: var(--accent-primary-hover);
+}

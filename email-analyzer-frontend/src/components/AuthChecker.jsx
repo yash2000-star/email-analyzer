@@ -11,8 +11,8 @@ function AuthChecker({ children }) {
     const checkAuthStatus = async () => {
       setLoading(true);
       try {
-        // Use relative path due to proxy
-        const response = await axios.get('/auth/status');
+        const API_BASE = import.meta.env.VITE_API_BASE_URL;
+const response = await axios.get(`${API_BASE}/auth/status`);
         setIsAuthenticated(response.data.isAuthenticated);
       } catch (error) {
         console.error('Error checking auth status:', error);

@@ -22,7 +22,8 @@ function Layout() {
     const fetchUserInfo = async () => {
       setIsLoadingUser(true);
       try {
-        const response = await axios.get('/auth/status');
+        const API_BASE = import.meta.env.VITE_API_BASE_URL;
+        const response = await axios.get(`${API_BASE}/auth/status`);
         if (response.data.isAuthenticated && response.data.user && response.data.user.name) {
           setUserName(response.data.user.name.split(' ')[0] || 'User');
           setUserEmail(response.data.user.email || 'No email found'); // --- SET THE EMAIL HERE ---
@@ -43,7 +44,8 @@ function Layout() {
 
   const handleLogout = async () => {
      try {
-            await axios.get('/auth/logout');
+            const API_BASE = import.meta.env.VITE_API_BASE_URL;
+            await axios.get(`${API_BASE}/auth/logout`);
             navigate('/login');
         } catch (err) {
             console.error("Logout failed:", err);

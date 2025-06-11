@@ -20,7 +20,7 @@ function Navbar() {
     }, [menuOpen]);
 
     const handleLogin = () => {
-        window.location.href = '/auth/google';
+       window.location.href = `${import.meta.env.VITE_API_BASE_URL}/auth/google`;
     };
 
     const handleLinkClick = () => {

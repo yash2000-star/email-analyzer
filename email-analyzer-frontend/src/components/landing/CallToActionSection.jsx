@@ -6,7 +6,7 @@ import styles from './CallToActionSection.module.css';
 
 function CallToActionSection() {
   const handleLogin = () => {
-    window.location.href = '/auth/google';
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/auth/google`;
   };
 
   return (

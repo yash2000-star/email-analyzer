@@ -6,7 +6,7 @@ function LoginPage() {
   // Redirects to backend Google OAuth endpoint
   const handleLogin = () => {
     // Use relative path due to Vite proxy
-    window.location.href = '/auth/google';
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/auth/google`;
   };
 
   return (

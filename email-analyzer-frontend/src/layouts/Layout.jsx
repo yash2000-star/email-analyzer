@@ -58,7 +58,7 @@ function Layout() {
         <header className={styles.header}>
           <div className={styles.headerLeft}>
             <Link to="/dashboard" className={styles.logo}>
-              InboXAI Compass 🧭
+              InboXAI Compass 
             </Link>
           </div>
           <div className={styles.headerCenter}>
